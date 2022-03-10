@@ -1,4 +1,4 @@
-const md5 = require('md5');
+const access = require('../utils/access');
 const models = require('../../models/index');
 const outlet = models.outlet
 
@@ -6,6 +6,11 @@ class Outlet {
 
   async store(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const data = {
         id_user: req.body.id_user,
         alamat: req.body.alamat
@@ -27,6 +32,10 @@ class Outlet {
 
   async update(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = {id_outlet:req.params.id}
       const data = {
@@ -50,6 +59,11 @@ class Outlet {
 
   async delete(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const param = { id_outlet: req.params.id }
 
       let result = await outlet.destroy({ where: param })
@@ -68,6 +82,11 @@ class Outlet {
 
   async index(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       let result = await outlet.findAll()
       return res.status(200).json({
         message: "success delete data outlet",
@@ -84,6 +103,10 @@ class Outlet {
 
   async show(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_user: req.params.id }
 

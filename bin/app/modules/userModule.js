@@ -1,5 +1,6 @@
 const jsonwebtoken = require('jsonwebtoken');
 const md5 = require('md5');
+const access = require('../utils/access');
 const models = require('../../models/index');
 const user = models.user
 const SECRET_KEY = "inisecret"
@@ -51,6 +52,11 @@ class User {
 
   async store(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const data = {
         nama_user: req.body.nama_user,
         username: req.body.username,
@@ -74,6 +80,10 @@ class User {
 
   async update(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_user: req.params.id }
       const data = {
@@ -98,6 +108,10 @@ class User {
 
   async delete(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_user: req.params.id }
 
@@ -117,6 +131,11 @@ class User {
 
   async index(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+      
       let result = await user.findAll()
       return res.status(200).json({
         message: "success delete data user",

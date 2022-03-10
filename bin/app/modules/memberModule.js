@@ -1,4 +1,4 @@
-const md5 = require('md5');
+const access = require('../utils/access');
 const models = require('../../models/index');
 const member = models.member
 
@@ -6,6 +6,11 @@ class Member {
 
   async store(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const data = {
         nama_member: req.body.nama_member,
         alamat: req.body.alamat,
@@ -29,8 +34,12 @@ class Member {
 
   async update(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
-      const param = {id_member:req.params.id}
+      const param = { id_member: req.params.id }
       const data = {
         nama_member: req.body.nama_member,
         alamat: req.body.alamat,
@@ -38,7 +47,7 @@ class Member {
         telp: req.body.telp
       }
 
-      let result = await member.update(data, {where:param})
+      let result = await member.update(data, { where: param })
       return res.status(200).json({
         message: "success update data member",
         data: result
@@ -54,6 +63,10 @@ class Member {
 
   async delete(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_member: req.params.id }
 
@@ -73,13 +86,19 @@ class Member {
 
   async index(req, res) {
     try {
+      let granted = await access.kasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       let result = await member.findAll()
       return res.status(200).json({
-        message: "success delete data member",
+        message: "success get all data member",
         data: result
       });
 
     } catch (error) {
+      console.log(error)
       return res.status(500).json({
         message: "Internal error",
         err: error
@@ -89,6 +108,10 @@ class Member {
 
   async show(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_member: req.params.id }
 

@@ -1,4 +1,4 @@
-const md5 = require('md5');
+const access = require('../utils/access');
 const models = require('../../models/index');
 const paket = models.paket
 
@@ -6,6 +6,11 @@ class Paket {
 
   async store(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const data = {
         jenis: req.body.jenis,
         harga: req.body.harga
@@ -27,6 +32,10 @@ class Paket {
 
   async update(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = {id_paket:req.params.id}
       const data = {
@@ -50,6 +59,10 @@ class Paket {
 
   async delete(req, res) {
     try {
+      let granted = await access.admin(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       const param = { id_paket: req.params.id }
 
@@ -69,6 +82,11 @@ class Paket {
 
   async index(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       let result = await paket.findAll()
       return res.status(200).json({
         message: "success get data paket",

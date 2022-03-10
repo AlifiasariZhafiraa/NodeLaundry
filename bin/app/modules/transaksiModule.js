@@ -1,6 +1,5 @@
-const { param } = require('express/lib/request');
-const md5 = require('md5');
 const moment = require('moment');
+const access = require('../utils/access');
 const models = require('../../models/index');
 const transaksi = models.transaksi
 const detail = models.detail
@@ -11,6 +10,10 @@ class Transaksi {
 
   async store(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
 
       let date = moment()
       let batas = moment(date).add('days', 4)
@@ -126,6 +129,11 @@ class Transaksi {
 
   async updateBayar(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const param = { id_transaksi: req.params.id }
       const date = moment()
 
@@ -151,6 +159,11 @@ class Transaksi {
 
   async updateStatus(req, res) {
     try {
+      let granted = await access.adminKasir(req)
+      if (!granted.status) {
+        return res.status(403).json(granted.message);
+      }
+
       const param = { id_transaksi: req.params.id }
 
       const data = {
