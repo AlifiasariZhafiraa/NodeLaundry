@@ -84,23 +84,27 @@ class Transaksi {
           }
         ]
       })
+
       return res.status(200).json({
         message: "success get all data transaksi",
         data: result
       });
 
+
+
     } catch (error) {
+      console.log(error)
       return res.status(500).json({
         message: "Internal error",
-        err: error
+        err: null
       });
     }
   }
 
   async show(req, res) {
     try {
-      let param = {id_transaksi: req.params.id}
-      let result = await transaksi.findOne({
+      let param = { id_transaksi: req.params.id }
+      let dataTransaksi = await transaksi.findOne({
         where: param,
         include: [
           'member',
@@ -114,6 +118,20 @@ class Transaksi {
           }
         ]
       })
+
+      // custom payload for response
+      let result = {}
+
+      result = dataTransaksi.dataValues
+      result.total = 0
+
+      // insert total transaksi
+      const details = result.detail
+      details.map(detail => {
+        const total = detail.qty * detail.paket.harga
+        result.total += total
+      })
+
       return res.status(200).json({
         message: "success get data transaksi",
         data: result
@@ -139,10 +157,10 @@ class Transaksi {
 
       const data = {
         tgl_bayar: date,
-        dibayar:"dibayar"
+        dibayar: "dibayar"
       }
 
-      let result = await transaksi.update(data,{where: param})
+      let result = await transaksi.update(data, { where: param })
 
       return res.status(200).json({
         message: "success update status bayar transaksi",
@@ -167,7 +185,7 @@ class Transaksi {
       const param = { id_transaksi: req.params.id }
 
       const data = {
-        status:req.body.status
+        status: req.body.status
       }
 
       let result = await transaksi.update(data, { where: param })

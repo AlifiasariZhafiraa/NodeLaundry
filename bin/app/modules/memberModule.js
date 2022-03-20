@@ -86,7 +86,7 @@ class Member {
 
   async index(req, res) {
     try {
-      let granted = await access.kasir(req)
+      let granted = await access.adminKasir(req)
       if (!granted.status) {
         return res.status(403).json(granted.message);
       }
@@ -115,7 +115,7 @@ class Member {
 
       const param = { id_member: req.params.id }
 
-      let result = await member.findOne({ where: param })
+      let result = await member.findOne({ where: param})
       return res.status(200).json({
         message: "success get one data member",
         data: result

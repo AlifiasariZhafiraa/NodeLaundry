@@ -87,7 +87,7 @@ class Outlet {
         return res.status(403).json(granted.message);
       }
 
-      let result = await outlet.findAll()
+      let result = await outlet.findAll({include: ['user']})
       return res.status(200).json({
         message: "success delete data outlet",
         data: result
@@ -110,7 +110,7 @@ class Outlet {
 
       const param = { id_user: req.params.id }
 
-      let result = await outlet.findAll({ where: param })
+      let result = await outlet.findAll({ where: param, include: ['user'] })
       return res.status(200).json({
         message: "success get data by owner outlet",
         data: result

@@ -131,7 +131,7 @@ class User {
 
   async index(req, res) {
     try {
-      let granted = await access.admin(req)
+      let granted = await access.adminKasir(req)
       if (!granted.status) {
         return res.status(403).json(granted.message);
       }
