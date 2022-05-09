@@ -1,3 +1,5 @@
+//create tabel transaksi + relasi
+
 'use strict';
 const {
   Model

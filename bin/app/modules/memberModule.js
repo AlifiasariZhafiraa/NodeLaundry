@@ -2,6 +2,8 @@ const access = require('../utils/access');
 const models = require('../../models/index');
 const member = models.member
 
+//crud member
+
 class Member {
 
   async store(req, res) {

@@ -5,6 +5,8 @@ const models = require('../../models/index');
 const user = models.user
 const SECRET_KEY = "inisecret"
 
+//crud user
+
 class User {
   async login(req, res) {
     try {

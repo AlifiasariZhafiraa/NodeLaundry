@@ -5,6 +5,7 @@ const transaksi = models.transaksi
 const detail = models.detail
 const paket = models.paket
 
+//crud transaksi
 
 class Transaksi {
 

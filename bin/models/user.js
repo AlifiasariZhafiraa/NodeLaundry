@@ -1,3 +1,5 @@
+//create tabel user + relasi
+
 'use strict';
 const {
   Model

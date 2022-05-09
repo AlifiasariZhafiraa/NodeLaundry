@@ -1,3 +1,5 @@
+//create tabel member + relasi
+
 'use strict';
 const {
   Model

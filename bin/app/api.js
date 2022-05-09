@@ -22,17 +22,20 @@ const routes = async (server) => {
   server.delete("/api/user/:id", jwtAuth.authVerify, user.delete);
   server.get("/api/user", jwtAuth.authVerify, user.index);
 
+  //member endpoint
   server.post("/api/member", jwtAuth.authVerify, member.store);
   server.put("/api/member/:id", jwtAuth.authVerify, member.update);
   server.delete("/api/member/:id",jwtAuth.authVerify, member.delete);
   server.get("/api/member",jwtAuth.authVerify, member.index);
   server.get("/api/member/:id",jwtAuth.authVerify, member.show);
 
+  //paket endpoint
   server.post("/api/paket",jwtAuth.authVerify, paket.store);
   server.put("/api/paket/:id",jwtAuth.authVerify, paket.update);
   server.delete("/api/paket/:id",jwtAuth.authVerify, paket.delete);
   server.get("/api/paket",jwtAuth.authVerify, paket.index);
 
+  //outlet endpoint
   server.post("/api/outlet",jwtAuth.authVerify, outlet.store);
   server.put("/api/outlet/:id",jwtAuth.authVerify, outlet.update);
   server.delete("/api/outlet/:id",jwtAuth.authVerify, outlet.delete);
@@ -40,6 +43,7 @@ const routes = async (server) => {
 
   server.get("/api/outlet/owner/:id",jwtAuth.authVerify, outlet.show);
 
+  //transaksi endpoint
   server.post("/api/transaksi",jwtAuth.authVerify, transaksi.store);
   server.get("/api/transaksi",jwtAuth.authVerify, transaksi.index);
   server.get("/api/transaksi/:id",jwtAuth.authVerify, transaksi.show);

@@ -1,3 +1,5 @@
+//create tabel outlet + relasi
+
 'use strict';
 const {
   Model

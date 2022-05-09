@@ -2,6 +2,8 @@ const access = require('../utils/access');
 const models = require('../../models/index');
 const outlet = models.outlet
 
+//crud outlet
+
 class Outlet {
 
   async store(req, res) {

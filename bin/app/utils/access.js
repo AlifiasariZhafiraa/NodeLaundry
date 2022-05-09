@@ -1,3 +1,4 @@
+//previlege user
 
 const deniedMessage = {
   message: "Access Denied",

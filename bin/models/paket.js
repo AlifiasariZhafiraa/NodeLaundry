@@ -1,3 +1,5 @@
+//create tabel paket + relasi
+
 'use strict';
 const {
   Model

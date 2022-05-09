@@ -2,6 +2,8 @@ const access = require('../utils/access');
 const models = require('../../models/index');
 const paket = models.paket
 
+//crud paket
+
 class Paket {
 
   async store(req, res) {
